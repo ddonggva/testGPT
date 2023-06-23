@@ -1,0 +1,23 @@
+version: '1'
+#LangChain + Vicuna
+#Python 3.11
+#Ubuntu 22.04
+
+#x-llm-common:
+#  &llm-common
+#  impage: llmbuild
+#  volumes:
+#    - .:/mnt/data/
+#    - /var/run/docker.sock:/var/run/docker.sock
+
+services:
+  llmapp:
+    image: llmbuild
+    command: tail -F /dev/null
+    volumes:
+      - type: bind
+        source: "C:/Users/ddong/Downloads/testGPT"
+        target: /mnt/data
+    command: tail -F anything
+
+

@@ -1,0 +1,10 @@
+cd C:\Users\ddong\Downloads\testGPT
+docker build -t llmbuild .
+docker run -dit -v "C:/Users/ddong/Downloads/testGPT":/mnt/data --name testGPTinstance --publish 8080:8080 llmbuild
+
+
+
+
+docker-compose up
+
+
