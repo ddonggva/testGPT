@@ -5,7 +5,7 @@ import pinecone
 import pandas as pd
 import torch
 from langchain.text_splitter import CharacterTextSplitter
-
+from getpass import getpass
 
 
 # knowledge here
@@ -14,11 +14,11 @@ from langchain.text_splitter import CharacterTextSplitter
 
 # define macros
 # pinecone credential
-pinecone_env = r''
-pinecone_api = r''
+pinecone_env = getpass("Your pinecone env please:")
+pinecone_api = getpass("Your pinecone api key please:")
 # use open ai to do embeddings
 
-openaikey = r''
+openaikey = getpass("Your OpenAI api key please:")
 
 # model_name = r'text-embedding-ada-002'
 #
@@ -48,6 +48,29 @@ from sentence_transformers import SentenceTransformer
 # load the table embedding model from huggingface models hub
 retriever = SentenceTransformer("deepset/all-mpnet-base-v2-table", device=device)
 retriever
+
+# create embeddings
+model = SentenceTransformer('deepset/all-mpnet-base-v2-table')
+
+#Our sentences we like to encode
+sentences = ['This framework generates embeddings for each input sentence',
+    'Sentences are passed as a list of string.',
+    'The quick brown fox jumps over the lazy dog.']
+
+#Sentences are encoded by calling model.encode()
+embeddings = model.encode(sentences)
+#Print the embeddings
+for sentence, embedding in zip(sentences, embeddings):
+    print("Sentence:", sentence)
+    print("Embedding:", embedding)
+    print("")
+
+
+
+
+
+
+
 
 
 # write table data into format

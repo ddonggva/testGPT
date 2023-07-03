@@ -22,3 +22,5 @@ faiss-cpu
 pyyaml
 pypdf
 sentence-transformers
+chromadb
+
