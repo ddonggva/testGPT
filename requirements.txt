@@ -13,3 +13,12 @@ torch
 llama-cpp-python
 tabulate
 llama-index
+openai
+pinecone-client[grpc]
+tiktoken
+datasets
+python-dotenv
+faiss-cpu
+pyyaml
+pypdf
+sentence-transformers
