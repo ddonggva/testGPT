@@ -7,7 +7,7 @@ EXPOSE 8080
 EXPOSE 8793
 RUN apt update
 RUN ln -fs /usr/share/zoneinfo/America/New_York/etc/localtime && apt install -yq tzdata && dpkg-reconfigure --frontend noninteractive tzdata
-RUN apt -yq install python3.11  && apt -yq install python3-pip && apt -yq install nano
+RUN apt -yq install python3.10  && apt -yq install python3-pip && apt -yq install nano
 RUN apt -yq install libpq-dev
 RUN apt -yq install wget
 COPY requirements.txt .
