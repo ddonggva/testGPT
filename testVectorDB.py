@@ -14,18 +14,18 @@ from langchain.text_splitter import CharacterTextSplitter
 
 # define macros
 # pinecone credential
-pinecone_env = r'northamerica-northeast1-gcp'
-pinecone_api = r'37b5ca46-255b-460b-bd41-f4777ef56d3a'
+pinecone_env = r''
+pinecone_api = r''
 # use open ai to do embeddings
 
-openaikey = r'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'
+openaikey = r''
 
-model_name = r'text-embedding-ada-002'
-
-embed = OpenAIEmbeddings(
-    model=model_name,
-    openai_api_key=openaikey
-)
+# model_name = r'text-embedding-ada-002'
+#
+# embed = OpenAIEmbeddings(
+#     model=model_name,
+#     openai_api_key=openaikey
+# )
 
 # load data
 data = load_dataset("ashraq/ott-qa-20k", split="train")
@@ -136,5 +136,24 @@ pipe = pipeline("table-question-answering",  model=model, tokenizer=tokenizer, d
 pipe(table=tables[3], query=query)
 
 
+###################  replace pinecone with ChromaDB
+from langchain.vectorstores import Chroma
+text1=r'But we want to save the embeddings in a DB that is persistent because recreating them every time we open the application would be a resource waste. This is where ChromaDB helps us. We can create and save the embeddings using text parts, and add metadata for each part. In this, the metadata will be strings that name each text part.'
+
+import chromadb
+from chromadb.utils import embedding_functions
+
+persist_directory = '/mnt/data/chromadb/'
+chroma_client = chromadb.Client()
+
+# collections are like tables in a db
+collection1 = chroma_client.create_collection(name="collection1")
+
+sentence_transformer_ef = embedding_functions.SentenceTransformerEmbeddingFunction(model_name="all-mpnet-base-v2")
+
+
+
+# describes how embeddings are done
+# https://huggingface.co/blog/getting-started-with-embeddings
 
 
