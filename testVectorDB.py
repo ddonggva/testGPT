@@ -62,7 +62,8 @@ def _preprocess_tables(tables: list):
     return processed
 
 # format all the dataframes in the tables list
-processed_tables = _preprocess_tables(tables)
+tabless = tables[:5]  # <--- original tables contains 20k tables, too large a throughput
+processed_tables = _preprocess_tables(tabless)
 # display the formatted table
 processed_tables[2]
 
@@ -112,8 +113,27 @@ for i in tqdm(range(0, len(processed_tables), batch_size)):
 # check that we have all vectors in index
 index.describe_index_stats()
 
+# test 1
+query = "which Head Coach have the most NCAA Championships?"
+query = "what is the total number of NCAA Championships by Notre Dame and North Carolina?"
+# generate embedding for the query
+xq = retriever.encode([query]).tolist()
+# query pinecone index to find the table containing answer to the query
+result = index.query(xq, top_k=1)
+result
 
 
+### read relevant table
+from transformers import pipeline, TapasTokenizer, TapasForQuestionAnswering
+
+model_name = "google/tapas-base-finetuned-wtq"
+# load the tokenizer and the model from huggingface model hub
+tokenizer = TapasTokenizer.from_pretrained(model_name)
+model = TapasForQuestionAnswering.from_pretrained(model_name, local_files_only=False)
+# load the model and tokenizer into a question-answering pipeline
+pipe = pipeline("table-question-answering",  model=model, tokenizer=tokenizer, device=device)
+
+pipe(table=tables[3], query=query)
 
 
 
